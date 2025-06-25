@@ -129,6 +129,7 @@ char			*read_prompt(void);
 ** signal.c
 */
 void			init_signals(void);
+void			handle_sigint_heredoc(int sig);
 
 /**
 ** builtin

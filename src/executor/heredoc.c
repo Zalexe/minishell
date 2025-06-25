@@ -24,11 +24,11 @@ static char	*dollar_del_chr(char *str)
 	return (NULL);
 }
 
-static char	*inject(char **line, char **env, uint8_t status)
+static char	*inject(char **line, char **env, t_state *state)
 {
 	char	*tmp;
 
-	tmp = inject_env(*line, env, status, &dollar_del_chr);
+	tmp = inject_env(*line, env, state, &dollar_del_chr);
 	free(*line);
 	*line = tmp;
 	return (*line);
@@ -51,7 +51,7 @@ static void	heredoc_child(int write_fd, char *eof,
 			clean_return(line);
 			break ;
 		}
-		if (env && !inject(&line, state->env, state->status))
+		if (env && !inject(&line, state->env, state))
 			exit(1);
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);

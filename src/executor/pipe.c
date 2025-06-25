@@ -62,7 +62,7 @@ int	run_child(t_cmd *cmd, char **env, int is_last)
 	t_pipe_args	args;
 	int			res;
 
-	args = (t_pipe_args){cmd, {0, {NULL, 0}, env, NULL, 0}, -1, -1, is_last};
+	args = (t_pipe_args){cmd, {0, {NULL, 0}, env, NULL, 0, ""}, -1, -1, is_last};
 	if (cmd->settings.pseudo_stdin != -1)
 		args.input_fd = cmd->settings.pseudo_stdin;
 	if (cmd->settings.pseudo_stdout != -1 || !is_last)
