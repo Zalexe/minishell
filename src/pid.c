@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:45:02 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/25 19:50:24 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:53:33 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ void	ft_get_pid(char buffer[10])
 			break ;
 		i++;
 	}
+	close(fd);
 	buffer[i] = '\0';
 }
