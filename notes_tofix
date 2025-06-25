@@ -1,0 +1,6 @@
+echo $"" no deberia imprimir nada
+echo $$ imprime el numero de $
+
+ctrl + c doble necesita hacer doble salida en at o heredoc
+no cierra heredoc el ctrl+c
+cat | cat | ls
