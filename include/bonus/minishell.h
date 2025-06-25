@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:00:00 by YOURLOGIN         #+#    #+#             */
-/*   Updated: 2025/06/23 21:00:05 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:30:44 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_state
 	char			**env;
 	t_list			*export_list;
 	uint_fast8_t	end;
+	char			pid[10];
 }	t_state;
 
 /**
@@ -149,7 +150,7 @@ int				ft_unset(char **args, char ***env, t_state *state);
 char			**copy_env(char **envp);
 void			free_env(char **env);
 t_str			get_env(char *str, char **env, uint8_t status);
-char			*inject_env(char *dst, char **env, uint8_t status,
+char			*inject_env(char *dst, char **env, t_state *state,
 					char *(*delchr)(char *));
 int				set_env_value(char ***env, const char *entry, char *value);
 int				envlen(char **env);
@@ -201,6 +202,11 @@ char			*skip_chars(char *str, char ch);
 void			filter_match(t_list_w *list, char *str,
 					int (*crit)(char *, char *), void (*d)(void *));
 char			*join(t_list_w *list, char del);
+
+/**
+* PID
+*/
+void	ft_get_pid(char buffer[10]);
 
 /**
  * others

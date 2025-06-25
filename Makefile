@@ -14,7 +14,7 @@ SRC_ENV_DIR = $(SRC_DIR)/env
 SRC_EXECUTOR_DIR = $(SRC_DIR)/executor
 SRC_PARSER_DIR = $(SRC_DIR)/parser
 
-SRC_BONUS = $(SRC_DIR)/error_handler.c $(SRC_DIR)/main_bonus.c $(SRC_DIR)/prompt.c $(SRC_DIR)/signal.c $(SRC_DIR)/utils.c $(SRC_DIR)/lst_utils.c \
+SRC_BONUS = $(SRC_DIR)/error_handler.c $(SRC_DIR)/main_bonus.c $(SRC_DIR)/prompt.c $(SRC_DIR)/signal.c $(SRC_DIR)/utils.c $(SRC_DIR)/lst_utils.c $(SRC_DIR)/pid.c \
 			$(SRC_BUILTIN_DIR)/builtin.c $(SRC_BUILTIN_DIR)/cd.c $(SRC_BUILTIN_DIR)/echo.c $(SRC_BUILTIN_DIR)/env_builtin.c \
 			$(SRC_BUILTIN_DIR)/exit.c $(SRC_BUILTIN_DIR)/export.c $(SRC_BUILTIN_DIR)/pwd.c $(SRC_BUILTIN_DIR)/unset.c \
 			$(SRC_ENV_DIR)/env.c $(SRC_ENV_DIR)/env_injector.c $(SRC_ENV_DIR)/env_utils.c \
@@ -24,7 +24,7 @@ SRC_BONUS = $(SRC_DIR)/error_handler.c $(SRC_DIR)/main_bonus.c $(SRC_DIR)/prompt
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 DEPS_BONUS = $(SRC_BONUS:.c=.d)
 
-SRC = $(SRC_DIR)/error_handler.c $(SRC_DIR)/main.c $(SRC_DIR)/prompt.c $(SRC_DIR)/signal.c $(SRC_DIR)/utils.c $(SRC_DIR)/lst_utils.c \
+SRC = $(SRC_DIR)/error_handler.c $(SRC_DIR)/main.c $(SRC_DIR)/prompt.c $(SRC_DIR)/signal.c $(SRC_DIR)/utils.c $(SRC_DIR)/lst_utils.c $(SRC_DIR)/pid.c \
 	  $(SRC_BUILTIN_DIR)/builtin.c $(SRC_BUILTIN_DIR)/cd.c $(SRC_BUILTIN_DIR)/echo.c $(SRC_BUILTIN_DIR)/env_builtin.c \
 	  $(SRC_BUILTIN_DIR)/exit.c $(SRC_BUILTIN_DIR)/export.c $(SRC_BUILTIN_DIR)/pwd.c $(SRC_BUILTIN_DIR)/unset.c \
 	  $(SRC_ENV_DIR)/env.c $(SRC_ENV_DIR)/env_injector.c $(SRC_ENV_DIR)/env_utils.c \

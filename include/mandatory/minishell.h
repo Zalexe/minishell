@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:00:00 by YOURLOGIN         #+#    #+#             */
-/*   Updated: 2025/06/23 20:04:43 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:30:37 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_state
 	char			**env;
 	t_list			*export_list;
 	uint_fast8_t	end;
+	char			pid[10];
 }	t_state;
 
 /**
@@ -149,7 +150,7 @@ int				ft_unset(char **args, char ***env, t_state *state);
 char			**copy_env(char **envp);
 void			free_env(char **env);
 t_str			get_env(char *str, char **env, uint8_t status);
-char			*inject_env(char *dst, char **env, uint8_t status,
+char			*inject_env(char *dst, char **env, t_state *state,
 					char *(*delchr)(char *));
 int				set_env_value(char ***env, const char *entry, char *value);
 int				envlen(char **env);
@@ -160,6 +161,7 @@ int				is_in_env(char **env, const char *key);
 void			remove_from_export_list(t_list **list, const char *key);
 char			*get_value(const char *env_entry);
 char			*get_key(const char *env_entry);
+
 /**
 ** executor
 */
@@ -186,6 +188,11 @@ char			*skip_whitespaces(char *str);
 char			*inject_astsk(char *dst);
 uint_fast8_t	is_consecutive_quote(char *str);
 char			*rev_quotes(char *str, size_t len);
+
+/**
+* PID
+*/
+void	ft_get_pid(char buffer[10]);
 
 /**
  * others

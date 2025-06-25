@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:18:06 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/19 16:37:47 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:30:18 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 #include "type_utils.h"
 #include "minishell.h"
 
+#define EMPTY ""
+
 static int	get_len(char *var)
 {
 	int	len;
 
 	len = 0;
-	if (*var == '$')
-		len++;
-	if (var[len] == '?' || ft_isdigit(var[len]))
+	if (var[len] == '\'' || var[len] == '"')
+		return (0);
+	if (var[len] == '?' || ft_isdigit(var[len]) || var[len] == '$')
 		return (len + 1);
-	while (ft_isalnum(var[len]))
+	while (ft_isalnum(var[len]) || var[len] == '_')
 		len++;
 	return (len);
 }
@@ -57,6 +59,8 @@ t_str	get_env(char *str, char **env, uint8_t status)
 
 	if (*str == '$')
 		str++;
+	if (*str == '\'' || *str == '"')
+		return ((t_str){EMPTY, 0});
 	if (*str == '?')
 		return ((t_str){ft_itoa(status), 1});
 	len = get_len(str);
@@ -68,13 +72,37 @@ t_str	get_env(char *str, char **env, uint8_t status)
 			return ((t_str){(*env) + len + 1, 0});
 		env++;
 	}
-	return ((t_str){"", 0});
+	return ((t_str){EMPTY, 0});
+}
+
+static t_str	get_env_int(char *str, char **env, t_state *s)
+{
+	int	len;
+
+	if (*str == '$')
+		str++;
+	if (*str == '\'' || *str == '"')
+		return ((t_str){EMPTY, 0});
+	if (*str == '$')
+		return ((t_str){s->pid, 0});
+	if (*str == '?')
+		return ((t_str){ft_itoa(s->status), 1});
+	len = get_len(str);
+	if (len == 0)
+		return ((t_str){"$", 0});
+	while (*env)
+	{
+		if (ft_strncmp(str, *env, len) == 0 && (*env)[len] == '=')
+			return ((t_str){(*env) + len + 1, 0});
+		env++;
+	}
+	return ((t_str){EMPTY, 0});
 }
 
 /**
 * Replace all $ env vars with corresponding values. Returns a malloc pointer
 */
-char	*inject_env(char *dst, char **env, uint8_t status,
+char	*inject_env(char *dst, char **env, t_state *state,
 			char *(*delchr)(char *))
 {
 	t_env_vars	v;
@@ -86,7 +114,7 @@ char	*inject_env(char *dst, char **env, uint8_t status,
 		if (!v.find)
 			break ;
 		v.i_tmp = get_len(v.find);
-		v.rep = get_env(v.find, env, status);
+		v.rep = get_env_int(v.find, env, state);
 		if (!v.rep.str)
 			return (free(v.res), NULL);
 		v.i_tmp2 = ft_strlen(v.rep.str);
