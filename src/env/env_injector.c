@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:18:06 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/25 19:30:18 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:47:49 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static int	get_len(char *var)
 	int	len;
 
 	len = 0;
+	if (var[len] == '$')
+		len++;
 	if (var[len] == '\'' || var[len] == '"')
-		return (0);
+		return (1);
 	if (var[len] == '?' || ft_isdigit(var[len]) || var[len] == '$')
 		return (len + 1);
 	while (ft_isalnum(var[len]) || var[len] == '_')
