@@ -61,29 +61,29 @@ static void	heredoc_child(int write_fd, char *eof,
 	exit(0);
 }
 
-static int	heredoc_parent(int read_fd, int write_fd, pid_t pid,
+static int	heredoc_parent(int fd[2], pid_t pid,
 				t_cmd_settings *settings, t_state *state)
 {
 	int	status;
 
 	signal(SIGINT, SIG_IGN);
-	close(write_fd);
+	close(fd[1]);
 	waitpid(pid, &status, 0);
 	init_signals();
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		write(STDERR_FILENO, "\n", 1);
-		close(read_fd);
+		close(fd[0]);
 		state->status = 130;
 		return (130);
 	}
 	if (WEXITSTATUS(status) != 0)
 	{
-		close(read_fd);
+		close(fd[0]);
 		state->status = WEXITSTATUS(status);
 		return (0);
 	}
-	settings->pseudo_stdin = read_fd;
+	settings->pseudo_stdin = fd[0];
 	return (1);
 }
 
@@ -104,5 +104,5 @@ int	handle_heredoc(t_cmd_settings *settings, char *eof,
 	}
 	if (pid == 0)
 		heredoc_child(fds[1], eof, env, state);
-	return (heredoc_parent(fds[0], fds[1], pid, settings, state));
+	return (heredoc_parent(fds, pid, settings, state));
 }
