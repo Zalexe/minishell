@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:38:08 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/23 19:04:44 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:35:55 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	clean_cmd(t_cmd *cmd)
 			free(cmd->args[i++]);
 		free(cmd->args);
 	}
+	close_safe(cmd->settings.pseudo_stdin);
+	close_safe(cmd->settings.pseudo_stdout);
 	free(cmd);
 	return (0);
 }

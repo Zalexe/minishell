@@ -6,14 +6,13 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:25:58 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/23 19:12:43 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:39:17 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 #include <stdint.h>
-#include <string.h>
 #include <unistd.h>
 
 char	*skip_whitespaces(char *str)
@@ -52,8 +51,7 @@ t_parse_result	parse_in_redir(t_cmd *cmd, char *str, t_state *state)
 {
 	t_slice	file;
 
-	if (cmd->settings.pseudo_stdin != -1)
-		close(cmd->settings.pseudo_stdin);
+	close_safe(cmd->settings.pseudo_stdin);
 	str++;
 	str = skip_whitespaces(str);
 	file = get_arg(str, state);
@@ -80,8 +78,7 @@ t_parse_result	parse_out_redir(t_cmd *cmd, char *str, t_state *state)
 	t_slice	arg;
 
 	cmd->settings.is_append = 0;
-	if (cmd->settings.pseudo_stdout != -1)
-		close(cmd->settings.pseudo_stdout);
+	close_safe(cmd->settings.pseudo_stdout);
 	if (*(str + 1) == '>')
 		cmd->settings.is_append = 1;
 	str = skip_whitespaces(str + 1 + cmd->settings.is_append);

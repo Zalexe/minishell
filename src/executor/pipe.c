@@ -6,12 +6,11 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:34 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/17 20:23:52 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:24:07 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 static int	child_process(t_pipe_args *args)
 {

@@ -6,12 +6,11 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:23 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/16 22:45:34 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:35:09 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 /**
  * args: cmd a ejecutar
@@ -113,18 +112,17 @@ static int	execute_command(t_cmd *cmd, t_cmd_args *args, t_state *state)
 static int	execute_single_command(t_cmd *cmd, char ***env, t_state *state)
 {
 	t_cmd_args	args;
+	int			status;
 
 	if (!cmd || !cmd->args)
 		return (1);
-	args = (t_cmd_args){cmd, env, -1, -1, 1};
-	if (cmd->settings.pseudo_stdin != -1)
-		args.input_fd = cmd->settings.pseudo_stdin;
-	if (cmd->settings.pseudo_stdout != -1)
-		args.pipe_write_fd = cmd->settings.pseudo_stdout;
+	args = (t_cmd_args){cmd, env, cmd->settings.pseudo_stdin,
+			cmd->settings.pseudo_stdout, 1};
 	if (is_builtin(cmd->args[0]))
-		return (exec_builtin(cmd, env, state, 1));
+		status = exec_builtin(cmd, env, state, 1);
 	else
-		return (execute_command(cmd, &args, state));
+		status = execute_command(cmd, &args, state);
+	return (status);
 }
 
 /**

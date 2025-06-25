@@ -75,7 +75,7 @@ bonus:
 	make MODE="bonus" __do_bonus
 
 debug: fclean
-	make SHFLAGS="-Wall -Wextra -Werror -MMD -g -fsanitize=address" bonus
+	make SHFLAGS="-Wall -Wextra -Werror -MMD -g" bonus
 
 .PHONY: all clean fclean re bonus __do_bonus debug
 

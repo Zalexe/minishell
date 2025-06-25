@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:29 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/22 18:03:23 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:48:50 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static void	heredoc_child(int write_fd, char *eof,
 			break ;
 		}
 		if (env && !inject(&line, state->env, state))
+		{
+			close(write_fd);
 			exit(1);
+		}
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
@@ -84,6 +87,7 @@ static int	heredoc_parent(int fd[2], pid_t pid,
 		return (0);
 	}
 	settings->pseudo_stdin = fd[0];
+	ft_printf("fd: %d\n", fd[0]);
 	return (1);
 }
 
@@ -103,6 +107,9 @@ int	handle_heredoc(t_cmd_settings *settings, char *eof,
 		return (print_error("fork", errno, 1, state), 0);
 	}
 	if (pid == 0)
+	{
+		close(fds[0]);
 		heredoc_child(fds[1], eof, env, state);
+	}
 	return (heredoc_parent(fds, pid, settings, state));
 }
