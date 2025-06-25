@@ -1,0 +1,11 @@
+*.o
+*.d
+.clangd
+minishell
+*.a
+*.out
+minishell_tester/
+minishell_tester-main/
+outfiles/
+*.test
+minishell_bonus

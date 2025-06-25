@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:49:22 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/22 18:31:20 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:31:09 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	main_loop(t_state *state)
 			break ;
 		if (is_line_invalid(line))
 			continue ;
-		command = inject_env(line, state->env, state->status, &envchr);
+		command = inject_env(line, state->env, state, &envchr);
 		add_history(line);
 		free(line);
 		line = inject_astsk(command, state);
@@ -96,7 +96,8 @@ int	main(int argc, char **argv, char **envp)
 	tmp = ft_itoa((ft_atoi(get_env("SHLVL", shell_env, 0).str) + 1));
 	set_env_value(&shell_env, "SHLVL", tmp);
 	free(tmp);
-	state = (t_state){0, {NULL, 0}, shell_env, NULL, 0};
+	state = (t_state){0, {NULL, 0}, shell_env, NULL, 0, ""};
+	ft_get_pid(state.pid);
 	init_signals();
 	main_loop(&state);
 	clean_pipeline(&state.pipeline);
