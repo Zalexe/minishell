@@ -128,7 +128,6 @@ char			*read_prompt(void);
 ** signal.c
 */
 void			init_signals(void);
-
 /**
 ** builtin
 */

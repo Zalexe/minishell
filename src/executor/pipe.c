@@ -42,11 +42,17 @@ static int	parent_process(pid_t pid)
 {
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
+	init_signals();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(2, "\n", 1);
 		return (128 + WTERMSIG(status));
+	}
 	else
 		return (status);
 }

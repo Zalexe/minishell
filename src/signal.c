@@ -24,7 +24,7 @@ static void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_sigint = 1;
-	write(2, "\n", 1);
+	rl_crlf();
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -34,4 +34,10 @@ void	init_signals(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	restore_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

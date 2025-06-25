@@ -43,7 +43,7 @@ t_parse_result	parse_heredoc(t_cmd *cmd, char *str, t_state *state)
 		cmd->settings.failed = (
 				print_error("syntax error: unexpected token", 1, 1, state), 1);
 	else if (!handle_heredoc(&cmd->settings, eof.str, quote, state))
-		cmd->settings.failed = (print_error(NULL, errno, 1, state), 0);
+		return (free(eof.str), (t_parse_result){NULL, NULL});
 	free(eof.str);
 	return ((t_parse_result){str, cmd});
 }

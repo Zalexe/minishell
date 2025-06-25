@@ -59,17 +59,23 @@ static int	parent_handle(pid_t pid, char *path)
 {
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
 	if (waitpid(pid, &status, 0) < 0)
 	{
 		perror("waitpid error");
 		free(path);
 		return (1);
 	}
+	init_signals();
 	free(path);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(2, "\n", 1);
 		return (128 + WTERMSIG(status));
+	}
 	return (1);
 }
 
