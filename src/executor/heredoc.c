@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:29 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/25 20:48:50 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:12:10 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static int	heredoc_parent(int fd[2], pid_t pid,
 		return (0);
 	}
 	settings->pseudo_stdin = fd[0];
-	ft_printf("fd: %d\n", fd[0]);
 	return (1);
 }
 
