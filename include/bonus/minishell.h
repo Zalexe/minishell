@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:00:00 by YOURLOGIN         #+#    #+#             */
-/*   Updated: 2025/06/25 19:30:44 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:32:23 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ char			*read_prompt(void);
 */
 void			init_signals(void);
 void			handle_sigint_heredoc(int sig);
+void			restore_signals(void);
 
 /**
 ** builtin
@@ -207,7 +208,7 @@ char			*join(t_list_w *list, char del);
 /**
 * PID
 */
-void	ft_get_pid(char buffer[10]);
+void			ft_get_pid(char buffer[10]);
 
 /**
  * others

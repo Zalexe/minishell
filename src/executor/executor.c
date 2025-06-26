@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:23 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/25 20:35:09 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:15:04 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static int	execute_single_command(t_cmd *cmd, char ***env, t_state *state)
 	if (!cmd || !cmd->args)
 		return (1);
 	args = (t_cmd_args){cmd, env, cmd->settings.pseudo_stdin,
-			cmd->settings.pseudo_stdout, 1};
+		cmd->settings.pseudo_stdout, 1};
 	if (is_builtin(cmd->args[0]))
 		status = exec_builtin(cmd, env, state, 1);
 	else

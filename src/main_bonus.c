@@ -6,10 +6,11 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:49:22 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/25 19:31:09 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:36:39 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 uint8_t	g_sigint;

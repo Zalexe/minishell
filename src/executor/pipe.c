@@ -6,10 +6,11 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:34 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/25 20:24:07 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:33:11 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 static int	child_process(t_pipe_args *args)
@@ -61,7 +62,8 @@ int	run_child(t_cmd *cmd, char **env, int is_last)
 	t_pipe_args	args;
 	int			res;
 
-	args = (t_pipe_args){cmd, {0, {NULL, 0}, env, NULL, 0, ""}, -1, -1, is_last};
+	args = (t_pipe_args){cmd, {0, {NULL, 0},
+		env, NULL, 0, ""}, -1, -1, is_last};
 	if (cmd->settings.pseudo_stdin != -1)
 		args.input_fd = cmd->settings.pseudo_stdin;
 	if (cmd->settings.pseudo_stdout != -1 || !is_last)
