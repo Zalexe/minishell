@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:10:33 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/17 19:12:40 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:54:27 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	set_old_pwd(char ***env, t_state *state)
 {
-	char	newpath[1024];
-
-	if (!getcwd(newpath, 1024) || !set_env_value(env,
+	if (!getcwd(state->pwd, PATH_MAX) || !set_env_value(env,
 			"OLDPWD", get_env("PWD", *env, state->status).str)
-		|| !set_env_value(env, "PWD", newpath))
+		|| !set_env_value(env, "PWD", state->pwd))
 		return (1);
 	return (0);
 }

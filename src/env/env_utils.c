@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:43:08 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/19 18:44:31 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:13:18 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	envlen(char **env)
 	return (i);
 }
 
-char	*envchr(char *str)
+t_chr_res	envchr(char *str)
 {
 	uint_fast8_t	quote[2];
 	uint_fast8_t	heredoc;
@@ -39,7 +39,7 @@ char	*envchr(char *str)
 			continue ;
 		}
 		if (*str == '$' && !quote[0] && !heredoc)
-			return (str);
+			return ((t_chr_res){str, quote[1]});
 		if (*str == '\'' && !quote[1])
 			quote[0] = !quote[0];
 		if (*str == '"' && !quote[0])
@@ -48,7 +48,7 @@ char	*envchr(char *str)
 		if (heredoc && is_arg_delimiter(*str))
 			heredoc = 0;
 	}
-	return (NULL);
+	return ((t_chr_res){NULL, 0});
 }
 
 char	*get_key(const char *env_entry)

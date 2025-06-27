@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:00:00 by YOURLOGIN         #+#    #+#             */
-/*   Updated: 2025/06/26 18:32:23 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:49:56 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_state
 	t_list			*export_list;
 	uint_fast8_t	end;
 	char			pid[10];
+	char			pwd[1024];
 }	t_state;
 
 /**
@@ -120,6 +121,12 @@ typedef struct s_parse_result
 	t_cmd	*command;
 }	t_parse_result;
 
+typedef struct s_chr_res
+{
+	char			*s;
+	uint_fast8_t	quote;
+}	t_chr_res;
+
 /**
 ** prompt.c
 */
@@ -143,7 +150,7 @@ void			ft_exit(t_cmd *cmd, t_state *state, uint_fast8_t end);
 int				ft_echo(char **args, int outfd);
 int				ft_env(char **env, int outfd);
 int				ft_export(char **args, char ***env, t_state *state);
-int				ft_pwd(int outfd);
+int				ft_pwd(int outfd, t_state *state);
 int				ft_unset(char **args, char ***env, t_state *state);
 
 /**
@@ -153,10 +160,10 @@ char			**copy_env(char **envp);
 void			free_env(char **env);
 t_str			get_env(char *str, char **env, uint8_t status);
 char			*inject_env(char *dst, char **env, t_state *state,
-					char *(*delchr)(char *));
+					t_chr_res (*delchr)(char *));
 int				set_env_value(char ***env, const char *entry, char *value);
 int				envlen(char **env);
-char			*envchr(char *str);
+t_chr_res		envchr(char *str);
 char			*gen_pair(char *key, char *value);
 int				is_in_list(t_list *list, const char *key);
 int				is_in_env(char **env, const char *key);

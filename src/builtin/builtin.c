@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:10:26 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/24 18:41:54 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:50:23 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_builtin(t_cmd *cmd, char ***env, t_state *state, uint_fast8_t is_main)
 	else if (!ft_strncmp(cmd->args[0], "exit", 5))
 		ft_exit(cmd, state, is_main);
 	else if (!ft_strncmp(cmd->args[0], "pwd", 4))
-		ret = ft_pwd(cmd->settings.pseudo_stdout);
+		ret = ft_pwd(cmd->settings.pseudo_stdout, state);
 	else if (!ft_strncmp(cmd->args[0], "env", 4))
 		ret = ft_env(*env, cmd->settings.pseudo_stdout);
 	else if (!ft_strncmp(cmd->args[0], "echo", 5))

@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:00:09 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/25 19:51:13 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:56:19 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,18 @@ void	main_loop(t_state *state)
 	}
 }
 
-static char	**init_env(char **envp)
+static char	**init_env(char **envp, t_state *state)
 {
 	char	**env;
-	char	cwd[PATH_MAX];
 
 	if (!envp || !envp[0])
 	{
 		env = malloc(sizeof(char *) * 6);
 		if (!env)
 			return (NULL);
-		if (!getcwd(cwd, sizeof(cwd)))
-			ft_strlcpy(cwd, "/tmp", sizeof(cwd));
-		env[0] = gen_pair("PWD", cwd);
+		if (!getcwd(state->pwd, PATH_MAX))
+			ft_strlcpy(state->pwd, "/tmp", PATH_MAX);
+		env[0] = gen_pair("PWD", state->pwd);
 		env[2] = ft_strdup("SHLVL=0");
 		env[3] = ft_strdup("_=/usr/bin/env");
 		env[4] = ft_strdup("PATH=/usr/bin:/bin");
@@ -82,20 +81,19 @@ static char	**init_env(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	**shell_env;
 	t_state	state;
 	char	*tmp;
 
 	g_sigint = 0;
 	(void)argc;
 	(void)argv;
-	shell_env = init_env(envp);
-	if (!shell_env)
+	state = (t_state){0, {NULL, 0}, NULL, NULL, 0, "", ""};
+	state.env = init_env(envp, &state);
+	if (!state.env)
 		return (print_error("Failed to initialize env", errno, 1, &state), 1);
-	tmp = ft_itoa((ft_atoi(get_env("SHLVL", shell_env, 0).str) + 1));
-	set_env_value(&shell_env, "SHLVL", tmp);
+	tmp = ft_itoa((ft_atoi(get_env("SHLVL", state.env, 0).str) + 1));
+	set_env_value(&state.env, "SHLVL", tmp);
 	free(tmp);
-	state = (t_state){0, {NULL, 0}, shell_env, NULL, 0, ""};
 	ft_get_pid(state.pid);
 	init_signals();
 	main_loop(&state);

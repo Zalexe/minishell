@@ -6,7 +6,7 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:34 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/26 18:33:11 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:52:17 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	run_child(t_cmd *cmd, char **env)
 	int			res;
 
 	args = (t_pipe_args){cmd, {0, {NULL, 0},
-		env, NULL, 0, ""}, -1, -1, 0};
+		env, NULL, 0, "", ""}, -1, -1, 0};
 	if (cmd->settings.pseudo_stdin != -1)
 		args.input_fd = cmd->settings.pseudo_stdin;
 	if (cmd->settings.pseudo_stdout != -1)

@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 19:50:29 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/22 17:04:37 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:08:05 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 typedef struct s_env_vars
 {
-	char	*res;
-	char	*find;
-	char	*tmp;
-	t_str	rep;
-	int		i_tmp;
-	int		i_tmp2;
+	char		*res;
+	t_chr_res	find;
+	char		*tmp;
+	t_str		rep;
+	int			i_tmp;
+	int			i_tmp2;
 }	t_env_vars;
 
 typedef struct s_astsk_vars

@@ -6,22 +6,22 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:26:29 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/26 18:12:10 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:11:07 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-static char	*dollar_del_chr(char *str)
+static t_chr_res	dollar_del_chr(char *str)
 {
 	while (*str)
 	{
 		if (*str == '$')
-			return (str);
+			return ((t_chr_res){str, 0});
 		str++;
 	}
-	return (NULL);
+	return ((t_chr_res){NULL, 0});
 }
 
 static char	*inject(char **line, char **env, t_state *state)
