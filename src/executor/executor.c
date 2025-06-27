@@ -141,5 +141,5 @@ int	execute_pipeline(t_pipeline *pipe, char ***env, t_state *state)
 		return (0);
 	else if (pipe->amount == 1)
 		return (execute_single_command(pipe->cmds[0], env, state));
-	return (handle_pipe(pipe->cmds, pipe->amount, state));
+	return (handle_pipe(pipe->cmds, 0, (int [2]){pipe->amount, 0}, state));
 }

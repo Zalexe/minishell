@@ -169,8 +169,8 @@ char			*get_key(const char *env_entry);
 */
 int				execute_pipeline(t_pipeline *pipe, char ***env, t_state *state);
 char			*get_command_path(char *cmd, char **env);
-int				run_child(t_cmd *cmd, char **env, int is_last);
-int				handle_pipe(t_cmd **cmds, int amount, t_state *state);
+int				run_child(t_cmd *cmd, char **env);
+int				handle_pipe(t_cmd **cmds, int i, int amount[2], t_state *state);
 int				handle_heredoc(t_cmd_settings *settings,
 					char *eof, uint_fast8_t env, t_state *state);
 int				execute_command_no_fork(t_cmd *cmd, char **env);

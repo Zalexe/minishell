@@ -61,67 +61,66 @@ static int	parent_process(pid_t pid)
 		return (status);
 }
 
-int	run_child(t_cmd *cmd, char **env, int is_last)
+int	run_child(t_cmd *cmd, char **env)
 {
 	t_pipe_args	args;
 	int			res;
 
 	args = (t_pipe_args){cmd, {0, {NULL, 0},
-		env, NULL, 0, ""}, -1, -1, is_last};
+		env, NULL, 0, ""}, -1, -1, 0};
 	if (cmd->settings.pseudo_stdin != -1)
 		args.input_fd = cmd->settings.pseudo_stdin;
-	if (cmd->settings.pseudo_stdout != -1 || !is_last)
+	if (cmd->settings.pseudo_stdout != -1)
 		args.pipe_write_fd = cmd->settings.pseudo_stdout;
 	res = child_process(&args);
 	return (res);
 }
 
-static int	run_pipe(t_cmd *cmd, t_state *state, int input_fd, int is_last)
+static pid_t	run_pipe(t_cmd *cmd, t_state *state, int pipe_fd[2],
+				int input_fd)
 {
 	pid_t	pid;
-	int		pipe_fd[2];
 
-	if (!is_last && pipe(pipe_fd) < 0)
-		return (perror("pipe"), 1);
 	if (cmd->settings.pseudo_stdin == -1)
 		cmd->settings.pseudo_stdin = input_fd;
-	if (!is_last && cmd->settings.pseudo_stdout == -1)
+	if (cmd->settings.pseudo_stdout == -1)
 		cmd->settings.pseudo_stdout = pipe_fd[1];
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"), 1);
 	if (pid == 0)
 	{
-		if (!is_last)
-			close(pipe_fd[0]);
-		exit(run_child(cmd, state->env, is_last));
+		close(pipe_fd[0]);
+		exit(run_child(cmd, state->env));
 	}
-	if (input_fd != 0)
-		close(input_fd);
-	if (!is_last)
-		return (close(pipe_fd[1]), pipe_fd[0]);
-	return (parent_process(pid));
+	return (pid);
 }
 
-int	handle_pipe(t_cmd **cmds, int amount, t_state *state)
+int	handle_pipe(t_cmd **cmds, int i, int amount[2], t_state *state)
 {
-	int		i;
-	int		input_fd;
-	int		last;
-	int		res;
+	int		pipe_fd[2];
+	int		status_last;
+	pid_t	res;
 
-	i = -1;
-	input_fd = 0;
-	while (++i < amount)
+	if (pipe(pipe_fd) < 0)
+		return (perror("pipe"), 1);
+	if (i == amount[0] - 1)
 	{
-		last = ((i + 1) == amount);
-		res = run_pipe(cmds[i], state, input_fd, last);
-		if (res == -1)
-			break ;
-		if (last)
-			state->status = res;
-		else
-			input_fd = res;
+		res = run_pipe(cmds[i], state,
+				(int [2]){pipe_fd[0], STDOUT_FILENO}, amount[1]);
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
+		close(amount[1]);
+		return (parent_process(res));
 	}
-	return (state->status);
+	else
+		res = run_pipe(cmds[i], state, pipe_fd, amount[1]);
+	close(pipe_fd[1]);
+	status_last = handle_pipe(cmds, i + 1,
+			(int [2]){amount[0], pipe_fd[0]}, state);
+	close(pipe_fd[0]);
+	if (i != 0)
+		close(amount[1]);
+	parent_process(res);
+	return (status_last);
 }
