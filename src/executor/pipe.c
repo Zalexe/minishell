@@ -43,7 +43,11 @@ static int	parent_process(pid_t pid)
 	int	status;
 
 	signal(SIGINT, SIG_IGN);
-	waitpid(pid, &status, 0);
+	if (waitpid(pid, &status, 0) < 0)
+	{
+		perror("waitpid error");
+		return (1);
+	}
 	init_signals();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));

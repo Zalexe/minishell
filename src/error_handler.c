@@ -51,6 +51,6 @@ void	*error_return(char *msg, uint8_t code,
 
 void	close_safe(int fd)
 {
-	if (fd != -1)
+	if (fd != -1 && fd != STDIN_FILENO && fd != STDOUT_FILENO)
 		close(fd);
 }
