@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:00:00 by YOURLOGIN         #+#    #+#             */
-/*   Updated: 2025/06/27 20:49:56 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:44:13 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_state
 	t_list			*export_list;
 	uint_fast8_t	end;
 	char			pid[10];
-	char			pwd[1024];
+	char			pwd[PATH_MAX];
 }	t_state;
 
 /**

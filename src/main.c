@@ -6,10 +6,11 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:00:09 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/27 20:56:19 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:47:02 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 uint8_t	g_sigint;
@@ -61,13 +62,13 @@ static char	**init_env(char **envp, t_state *state)
 {
 	char	**env;
 
+	if (!getcwd(state->pwd, PATH_MAX))
+		ft_strlcpy(state->pwd, "/tmp", PATH_MAX);
 	if (!envp || !envp[0])
 	{
 		env = malloc(sizeof(char *) * 6);
 		if (!env)
 			return (NULL);
-		if (!getcwd(state->pwd, PATH_MAX))
-			ft_strlcpy(state->pwd, "/tmp", PATH_MAX);
 		env[0] = gen_pair("PWD", state->pwd);
 		env[2] = ft_strdup("SHLVL=0");
 		env[3] = ft_strdup("_=/usr/bin/env");
