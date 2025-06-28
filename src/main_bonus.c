@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:49:22 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/27 20:43:26 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:08:29 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ static char	**init_env(char **envp, t_state *state)
 {
 	char	**env;
 
+	if (!getcwd(state->pwd, sizeof(state->pwd)))
+		ft_strlcpy(state->pwd, "/tmp", sizeof(state->pwd));
 	if (!envp || !envp[0])
 	{
 		env = malloc(sizeof(char *) * 6);
 		if (!env)
 			return (NULL);
-		if (!getcwd(state->pwd, sizeof(state->pwd)))
-			ft_strlcpy(state->pwd, "/tmp", sizeof(state->pwd));
 		env[0] = gen_pair("PWD", state->pwd);
 		env[2] = ft_strdup("SHLVL=0");
 		env[3] = ft_strdup("_=/usr/bin/env");
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	g_sigint = 0;
 	(void)argc;
 	(void)argv;
-	state = (t_state){0, {NULL, 0}, NULL, NULL, 0, ""};
+	state = (t_state){0, {NULL, 0}, NULL, NULL, 0, "", ""};
 	state.env = init_env(envp, &state);
 	if (!state.env)
 		return (print_error("Failed to initialize env", errno, 1, &state), 1);
