@@ -29,7 +29,7 @@ int	exec_builtin(t_cmd *cmd, char ***env, t_state *state, uint_fast8_t is_main)
 
 	ret = 1;
 	if (!ft_strncmp(cmd->args[0], "cd", 3))
-		ret = ft_cd(cmd->args, env, state);
+		ret = ft_cd(cmd->args, cmd->argc, env, state);
 	else if (!ft_strncmp(cmd->args[0], "export", 7))
 		ret = ft_export(cmd->args, env, state);
 	else if (!ft_strncmp(cmd->args[0], "unset", 6))

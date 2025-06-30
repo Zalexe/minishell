@@ -145,7 +145,7 @@ void			restore_signals(void);
 int				exec_builtin(t_cmd *cmd, char ***env,
 					t_state *state, uint_fast8_t is_main);
 int				is_builtin(char *cmd);
-int				ft_cd(char **args, char ***env, t_state *state);
+int				ft_cd(char **args, int argc, char ***env, t_state *state);
 void			ft_exit(t_cmd *cmd, t_state *state, uint_fast8_t end);
 int				ft_echo(char **args, int outfd);
 int				ft_env(char **env, int outfd);
