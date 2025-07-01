@@ -98,6 +98,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_get_pid(state.pid);
 	init_signals();
 	main_loop(&state);
+	ft_printf("exit\n");
 	clean_pipeline(&state.pipeline);
 	rl_clear_history();
 	free_env(state.env);

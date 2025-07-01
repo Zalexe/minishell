@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:00:00 by YOURLOGIN         #+#    #+#             */
-/*   Updated: 2025/06/27 20:51:39 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:54:06 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int				execute_command_no_fork(t_cmd *cmd, char **env);
 */
 int				parse_full_command(char *str, t_state *state);
 int				clean_pipeline(t_pipeline *pipe);
-int				clean_cmd(t_cmd *cmd);
+int				clean_cmd(t_cmd *cmdd);
 t_slice			get_arg(char *str, t_state *state);
 int				count_quotes(char *str);
 void			settings_zero(t_cmd_settings *set);

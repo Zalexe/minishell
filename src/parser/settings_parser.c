@@ -6,7 +6,7 @@
 /*   By: intherna <intherna@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 18:25:58 by intherna          #+#    #+#             */
-/*   Updated: 2025/06/25 20:39:17 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:02:51 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_parse_result	parse_heredoc(t_cmd *cmd, char *str, t_state *state)
 		cmd->settings.failed = (
 				print_error("syntax error: unexpected token", 1, 1, state), 1);
 	else if (!handle_heredoc(&cmd->settings, eof.str, quote, state))
-		return (free(eof.str), (t_parse_result){NULL, NULL});
+		return (free(eof.str), clean_cmd(cmd), (t_parse_result){NULL, NULL});
 	free(eof.str);
 	return ((t_parse_result){str, cmd});
 }

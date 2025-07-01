@@ -6,13 +6,20 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:41:19 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/23 20:52:34 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:33:43 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
+
+char	*skip_chars(char *str, char ch)
+{
+	while (*str == ch)
+		str++;
+	return (str);
+}
 
 int	count_quotes(char *str)
 {

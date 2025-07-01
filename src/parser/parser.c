@@ -6,20 +6,13 @@
 /*   By: cmarrued <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:41:14 by cmarrued          #+#    #+#             */
-/*   Updated: 2025/06/24 19:24:04 by intherna         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:58:53 by intherna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "type_utils.h"
 #include <stdlib.h>
-
-char	*skip_chars(char *str, char ch)
-{
-	while (*str == ch)
-		str++;
-	return (str);
-}
 
 static t_parse_result	build_args(t_cmd *cmd, char *end_pos, t_state *state)
 {
@@ -44,15 +37,15 @@ static t_parse_result	rec_parse(t_cmd *cmd, char *str, t_state *state)
 		return (build_args(cmd, str, state));
 	v.arg = get_arg(str, state);
 	if (!v.arg.str)
-		return ((t_parse_result){NULL, NULL});
+		return (clean_cmd(cmd), (t_parse_result){NULL, NULL});
 	str += v.arg.len;
 	v.pos = cmd->argc++;
 	v.res = rec_parse(cmd, str, state);
-	if (!cmd->args)
+	if (!v.res.command || !v.res.command->args)
 	{
 		free(v.arg.str);
 		if (!v.res.end_pos)
-			return (clean_cmd(cmd), (t_parse_result){NULL, NULL});
+			return ((t_parse_result){NULL, NULL});
 		v.res.end_pos = cmddelimitchr(v.res.end_pos);
 	}
 	else
